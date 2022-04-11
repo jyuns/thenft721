@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 module.exports = new Schema({
+    ranking: Number,
 
     name: String,
     name_kor: String,
@@ -24,26 +25,40 @@ module.exports = new Schema({
         }
     ],
 
-    //? 원화, 변화량 기준 확인 필요함
-    trackings: {
+    price: {
         _id: false,
-        twitter_power: Number,
-        discord_power: Number,
+        klaytn_price: Number, //원화 가격기준
+        eth_price: Number, //원화 가격기준
     
-        klaytn_price: Number,
-        eth_price: Number,
-        
-        floor_price_klay: Number,
         total_volume_klay: Number,
-        average_price_klay: Number,
+        chg_total_volume_klay: Number,
     
-        floor_price_klay_eth: Number,
-        total_volume_eth: Number,
-        average_price_eth: Number,
+        floor_price_klay: Number,
+        chg_floor_price_klay: Number,
     
-        one_day_change: Number,
-        seven_day_change: Number,        
-    }, 
+        one_day_average_price_klay: Number,
+        chg_one_day_average_price_klay: Number,
+    
+        one_day_volume_klay: Number,
+        chg_one_day_volume_klay: Number,
+    
+        num_owners: Number,
+        chg_num_owners: Number,
+    
+        total_supply: Number,
+    },
+
+    media: {
+        _id: false,
+
+        twitter_power: Number,
+        chg_twitter_power: Number,
+        twitter_power_chart: [Number], //aggregate 7 days
+        
+        discord_power: Number,
+        chg_discord_power: Number,
+        discord_power_chart: [Number], //aggregate 7 days
+    },
 
     channels: [
         {
