@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-
-
 module.exports = new Schema({
     collection_id: String,
-    
+
     klaytn_price: Number, //원화 가격기준
     eth_price: Number, //원화 가격기준
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-module.exports = new Schema({
+const collectionSchema = new Schema({
     ranking: Number,
 
     name: String,
@@ -95,3 +95,5 @@ module.exports = new Schema({
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
 })
+
+module.exports = mongoose.model('Collection', collectionSchema)
