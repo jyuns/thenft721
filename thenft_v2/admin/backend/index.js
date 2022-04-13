@@ -10,7 +10,9 @@ async function server() {
     env_flag? ssh(mongoose()):mongoose()
     
     const app = await require('./module/express.module');
-
+    const routes = await require('./index.route');
+    app.use('/api', routes);
+    
     app.listen(node.port, () => {
         console.log(`listening port ${node.port}`)
     })

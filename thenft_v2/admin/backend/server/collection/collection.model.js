@@ -77,7 +77,7 @@ const collectionSchema = new Schema({
             collection_id: String,
             name: String,
             name_kor: String,
-            image: String,
+            sub_image: String,
         }
     ],
 
@@ -95,5 +95,42 @@ const collectionSchema = new Schema({
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
 })
+
+
+collectionSchema.statics = {
+
+    load() {
+        return this.find({}, {
+            _id:1,
+            name:1,
+            created_at:1,
+            updated_at:1,
+        })
+        .lean()
+        .exec()
+    },
+
+    get(id) {
+        return this.findById(id)
+            .lean()
+            .exec()
+    },
+
+    search(value) {
+        return this.find({
+            $text: {
+                $search: value
+            }
+        }, {
+            _id: 1,
+            name: 1,
+        })
+        .limit(5)
+        .lean()
+        .exec()
+    }
+
+}
+
 
 module.exports = mongoose.model('Collection', collectionSchema)
