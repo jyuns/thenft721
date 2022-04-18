@@ -94,6 +94,28 @@ const routes = [
     component: () => import('../views/promotions.update'),
   },  
 
+  // project
+  {
+    path: '/projects',
+    name: 'projects',
+    component: () => import('../views/projects'),
+  },
+
+  {
+    path: '/projects/bulk',
+    component: () => import('../views/projects.bulk'),
+  },
+
+  {
+    path: '/projects/create',
+    component: () => import('../views/projects.update'),
+  },
+
+  {
+    path: '/projects/update/:id',
+    component: () => import('../views/projects.update'),
+  },  
+
 
 
 

@@ -10,4 +10,7 @@ router.route('/')
 router.route('/search')
     .get(projectCtrl.search)
 
+router.route('/bulk')
+    .post(projectCtrl.bulk)
+
 module.exports = router;

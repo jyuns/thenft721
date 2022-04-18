@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.route('/')
     .get(promotionCtrl.load)
-//    .post(promotionCtrl.create)
+    .post(promotionCtrl.create)
 
 router.route('/:id')
     .post(promotionCtrl.get)

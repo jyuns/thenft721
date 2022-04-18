@@ -1,6 +1,6 @@
 <template>
   <div>
-    <atom-auto-input :object="collections" @change="updateValue($event, collections)"/>
+    <atom-auto-input :object="collections" :limit="true" @change="updateValue($event, collections)"/>
     <atom-input :object="source" @change="updateValue($event, source)"/>
     
     <atom-select :select="division"/>

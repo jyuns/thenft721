@@ -8,6 +8,9 @@
         <hr>
         <router-link class="py-2" to="/partners">Partners</router-link>
         <hr>
+        <router-link class="py-2" to="/projects">Projects</router-link>
+        <router-link class="py-2" to="/projects/bulk">Projects Bulk</router-link>
+        <hr>
         <router-link class="py-2" to="/events">Events</router-link>
         <hr>
         <router-link class="py-2" to="/promotions">Promotions</router-link>

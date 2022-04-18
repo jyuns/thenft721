@@ -9,7 +9,7 @@
 
     <atom-auto-input :object="collections" @change="updateValue($event, collections)"/>
     <atom-auto-input :object="partners" @change="updateValue($event, partners)"/>
-    <atom-auto-input :object="projects" @change="updateValue($event, projects)"/>
+    <atom-auto-input :object="projects" :limit="true" @change="updateValue($event, projects)"/>
 
     <!-- 공식 사이트 -->
     <organismChannelInput :object="channels" @add="addChannel"/>

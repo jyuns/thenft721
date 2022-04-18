@@ -33,6 +33,11 @@ export default {
         object: {
             type: Object,
             require: true,
+        },
+
+        limit: {
+            type: Boolean,
+            default: false,
         }
     },
 
@@ -79,6 +84,8 @@ export default {
             
             if(_id == undefined) return
             if(values.indexOf(_id) != -1) return
+            if(this.limit * arr.length) return
+            
             arr.push({_id, name})
 
             this.object.array = arr;

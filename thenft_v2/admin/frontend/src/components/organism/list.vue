@@ -2,17 +2,35 @@
 <div class="text-right">
     <b-button class="mb-2" variant="success" @click="add">추가</b-button>
     <b-table striped :items="items" show-empty>
-        <template #cell(updated_at)="row">
-        <span>{{row.item.updated_at}}</span>
+        <template #cell(_id)="row">
+<!--        <span>{{row.item._id}}</span>-->
         <b-button class="mx-2" variant="success"  @click="update(row.item._id)">수정</b-button>
         <b-button class="mx-2" variant="danger" @click="remove(row.item._id)">삭제</b-button>
         </template>
+
+        <template #cell(start_date)="row">
+            {{date.dateFormat(row.item.start_date)}}
+        </template>
+
+        <template #cell(end_date)="row">
+            {{date.dateFormat(row.item.end_date)}}
+        </template>
+
+        <template #cell(created_at)="row">
+            {{date.dateFormat(row.item.created_at)}}
+        </template>
+        <template #cell(updated_at)="row">
+            {{date.dateFormat(row.item.updated_at)}}
+        </template>
+
+
     </b-table>
 </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+const date = require('../../utils/date.util');
 
 export default {
     props: ['label'],
@@ -30,6 +48,7 @@ export default {
             ],
 
             items: [],
+            date,
         }
     },
 
