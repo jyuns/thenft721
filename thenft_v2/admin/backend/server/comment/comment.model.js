@@ -6,6 +6,6 @@ module.exports = new Schema({
     author: String,
     role: String,
     content: String,
-    created_at: { type: Date, default: Date.now },
-    updated_at: { type: Date, default: Date.now },
+    created_at: { type: Date, default: new Date(Date.now() + 32400000)},
+    updated_at: { type: Date, default: new Date(Date.now() + 32400000)},
 })

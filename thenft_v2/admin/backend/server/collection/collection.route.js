@@ -11,4 +11,7 @@ router.route('/')
 router.route('/search')
     .get(collectionCtrl.search)
 
+router.route('/:id')
+    .post(collectionCtrl.get)
+
 module.exports = router;

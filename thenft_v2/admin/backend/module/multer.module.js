@@ -16,10 +16,10 @@ const upload = multer({
         s3: storage,
         acl: 'public-read',
         bucket: (req, file, cb) => {
-            cb(null, `${storage.bucket}/${req.query.label}`)
+            cb(null, `${s3.bucket}/${req.query.label}`)
         },
         key: (req, file, cb) => {
-            cb(null, `${req.query.name}.${file.mimetype.split('/').pop()}`)
+            cb(null, `${req.query._id}.${file.mimetype.split('/').pop()}`)
         },
     })
 })

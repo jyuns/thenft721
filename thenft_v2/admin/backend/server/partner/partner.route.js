@@ -7,7 +7,10 @@ router.route('/')
     .get(partnerCtrl.load)
     .post(partnerCtrl.create)
 
-    router.route('/search')
+router.route('/search')
     .get(partnerCtrl.search)
+
+router.route('/:id')
+    .post(partnerCtrl.get)
 
 module.exports = router;

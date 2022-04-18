@@ -31,7 +31,7 @@ const s3 = {
     accessKeyId: "AKIAZ4UTYOXEWAXWCJE4",
     secretAccessKey: "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",
     region: "ap-northeast-2",
-    buket: env_flag? 'thenft':'thenft'
+    bucket: env_flag? 'thenft':'thenft'
 }
 
 module.exports = { node, mongo, ssh, env_flag, s3 }

@@ -6,11 +6,11 @@ const partnerSchema = new Schema({
     name: String,
     image: String,
 
-    type: String,
+    division: String,
     source: String,
     
-    created_at: { type: Date, default: Date.now },
-    updated_at: { type: Date, default: Date.now },
+    created_at: { type: Date, default: new Date(Date.now() + 32400000)},
+    updated_at: { type: Date, default: new Date(Date.now() + 32400000)},
 })
 
 partnerSchema.statics = {
@@ -46,4 +46,4 @@ partnerSchema.statics = {
     }
 }
 
-module.exports = mongoose.model('Partner', partnerSchema)
+module.exports = mongoose.model('partners', partnerSchema)

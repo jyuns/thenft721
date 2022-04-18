@@ -7,7 +7,7 @@ router.route('/')
     .get(projectCtrl.load)
     .post(projectCtrl.create)
 
-    router.route('/search')
+router.route('/search')
     .get(projectCtrl.search)
 
 module.exports = router;

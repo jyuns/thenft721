@@ -27,49 +27,55 @@ const collectionSchema = new Schema({
 
     price: {
         _id: false,
-        klaytn_price: Number, //원화 가격기준
-        eth_price: Number, //원화 가격기준
+        klaytn_price: { type: Number, default: 0 },
+        eth_price: { type: Number, default: 0 },
     
-        total_volume_klay: Number,
-        chg_total_volume_klay: Number,
+        total_volume_klay: { type: Number, default: 0 },
+        chg_total_volume_klay: { type: Number, default: 0 },
     
-        floor_price_klay: Number,
-        chg_floor_price_klay: Number,
+        floor_price_klay: { type: Number, default: 0 },
+        chg_floor_price_klay: { type: Number, default: 0 },
     
-        one_day_average_price_klay: Number,
-        chg_one_day_average_price_klay: Number,
+        one_day_average_price_klay: { type: Number, default: 0 },
+        chg_one_day_average_price_klay: { type: Number, default: 0 },
     
-        one_day_volume_klay: Number,
-        chg_one_day_volume_klay: Number,
+        one_day_volume_klay: { type: Number, default: 0 },
+        chg_one_day_volume_klay: { type: Number, default: 0 },
     
-        num_owners: Number,
-        chg_num_owners: Number,
+        num_owners: { type: Number, default: 0 },
+        chg_num_owners: { type: Number, default: 0 },
     
-        total_supply: Number,
+        total_supply: { type: Number, default: 0 },
     },
 
     media: {
         _id: false,
 
-        twitter_power: Number,
-        chg_twitter_power: Number,
+        twitter_power: { type: Number, default: 0 },
+        chg_twitter_power: { type: Number, default: 0 },
         twitter_power_chart: [Number], //aggregate 7 days
         
-        discord_power: Number,
-        chg_discord_power: Number,
+        discord_power: { type: Number, default: 0 },
+        chg_discord_power: { type: Number, default: 0 },
         discord_power_chart: [Number], //aggregate 7 days
     },
 
     channels: [
-        {
+        {   
             _id: false,
-            type: String,
+            division: String,
             source: String,
-        }
+        },
+        
     ],
 
-    project_id: String,
-    project_name: String,
+    projects: [
+        {
+            _id: false,
+            project_id: String,
+            name: String
+        }
+    ],
 
     collections: [
         {
@@ -87,13 +93,13 @@ const collectionSchema = new Schema({
             partner_id: String,
             name: String,
             image: String,
-            type: String,
+            division: String,
             source: String,
         }
     ],
 
-    created_at: { type: Date, default: Date.now },
-    updated_at: { type: Date, default: Date.now },
+    created_at: { type: Date, default: new Date(Date.now() + 32400000)},
+    updated_at: { type: Date, default: new Date(Date.now() + 32400000)},
 })
 
 
@@ -128,6 +134,15 @@ collectionSchema.statics = {
         .limit(5)
         .lean()
         .exec()
+    },
+
+    upload(value, main, sub) {
+        return this.findByIdAndUpdate({
+            _id: value
+        }, {
+            main_image: main,
+            sub_image: sub,
+        })
     }
 
 }

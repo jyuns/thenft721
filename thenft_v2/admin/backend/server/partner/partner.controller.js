@@ -9,7 +9,7 @@ function load(req, res, next) {
 }
 
 function get(req, res, next) {
-    Partner.get(req.body.id)
+    Partner.get(req.params.id)
         .then((partner) => {
             return res.status(200).json(partner)
         })
@@ -24,16 +24,42 @@ function search(req, res, next) {
         .catch(err => next(err))
 }
 
-function create(req, res, next) {
-    
-}
+async function create(req, res, next) {
+    let data = req.body;
 
-function update(req, res, next) {
-    
+    data.name = data.name.value
+    data.source = data.source.value
+    data.division = data.division.type
+    data.image = data.image.sorce
+
+    delete data.label
+
+    if(!data.id) {
+        delete data.id
+        
+        const newPartner = new Partner({
+            ...data
+        })
+
+        newPartner.save()
+            .then(saved => res.json(saved))
+            .catch(e => next(e));
+
+    } else {
+        let _id = data.id
+        delete data.id
+
+        await Partner.findByIdAndUpdate({
+            _id: _id
+        }, {
+            ...data
+        })
+        res.status(200).send('success')
+    }
 }
 
 function remove(req, res, next) {
     
 }
 
-module.exports = { load, get, search, create, update, remove }
+module.exports = { load, get, search, create, remove }
