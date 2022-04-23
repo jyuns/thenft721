@@ -32,7 +32,7 @@ schema.statics = {
         .limit(20)
         .lean()
         .exec()
-},
+    },
 
     next(last_id, date) {
         return this.find({

@@ -12,4 +12,7 @@ router.use('/collection', collectionRoute);
 const eventRoute = require('./event.route');
 router.use('/event', eventRoute);
 
+const searchRoute = require('./search.route');
+router.use('/search', searchRoute);
+
 module.exports = router;

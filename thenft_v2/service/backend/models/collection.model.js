@@ -33,17 +33,17 @@ const schema = new Schema({
         klaytn_price: { type: Number, default: 0 },
         eth_price: { type: Number, default: 0 },
     
-        total_volume_klay: { type: Number, default: 0 },
-        chg_total_volume_klay: { type: Number, default: 0 },
+        total_volume: { type: Number, default: 0 },
+        chg_total_volume: { type: Number, default: 0 },
     
-        floor_price_klay: { type: Number, default: 0 },
-        chg_floor_price_klay: { type: Number, default: 0 },
+        floor_price: { type: Number, default: 0 },
+        chg_floor_price: { type: Number, default: 0 },
     
-        one_day_average_price_klay: { type: Number, default: 0 },
-        chg_one_day_average_price_klay: { type: Number, default: 0 },
+        one_day_average_price: { type: Number, default: 0 },
+        chg_one_day_average_price: { type: Number, default: 0 },
 
-        one_day_volume_klay: { type: Number, default: 0 },
-        chg_one_day_volume_klay: { type: Number, default: 0 },
+        one_day_volume: { type: Number, default: 0 },
+        chg_one_day_volume: { type: Number, default: 0 },
 
         one_day_sales: { type: Number, default: 0 },
 
