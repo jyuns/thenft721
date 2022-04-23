@@ -43,6 +43,9 @@ export default {
 #next-btn {
   display: flex;
   justify-content: center;
+
+  margin-top: 32px;
+  margin-bottom: 32px;
 }
 
 #next-btn>div {

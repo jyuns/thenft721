@@ -1,6 +1,7 @@
 const axios = require('../../utils/axios.util')();
-const label = 'event'
 const { ymd } = require('../../utils/convert.util');
+
+const label = 'event'
 
 const event = {
     namespaced: true,
@@ -65,13 +66,12 @@ const event = {
 
         SET_DATE: (state, payload) => {
             if(!payload) payload = ymd(new Date())
-            state.DATE = payload
+            state.DATE = ymd(payload)
         }
     },
 
     actions: {
         LOAD: async(context) => {
-            console.log('LOADING')
             context.commit('LOADING')
 
             let payload = {'date': context.state.DATE}
@@ -110,7 +110,6 @@ const event = {
         },
 
         TOTAL_COUNT: async(context) => {
-
             let payload = {'date': context.state.DATE}
 
             let result = await axios({

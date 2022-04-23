@@ -6,6 +6,7 @@
     :fields="fields"
     :items="items"
     :sort-compare="sort"
+    label-sort-clear=""
     label-sort-asc=""
     label-sort-desc="">
 
@@ -20,8 +21,8 @@
         </template>
 
         <template #cell(ranking)="data">
-            <number-col
-            :data="data.item"/>
+            <ranking-col
+            :ranking="data.item.ranking"/>
         </template>
 
         <template #cell(division)="data">
@@ -41,54 +42,58 @@
             />
         </template>
 
+        <!-- Number Column -->
+        <template #cell(price.total_volume)>
+            <number-col :price="1" :change="1" :won="1"/>
+        </template>
+
+        <template #cell(price.floor_price)>
+            <number-col :price="1" :change="1" :won="1"/>
+        </template>
+
+        <template #cell(price.one_day_average_price)>
+            <number-col :price="1" :change="1" :won="1"/>
+        </template>
+
+        <template #cell(price.one_day_volume)>
+            <number-col :price="1" :change="1" :won="1"/>
+        </template>
+
+        <template #cell(price.one_day_sales)>
+            <number-col :price="1" :change="1"/>
+        </template>
+
+        <template #cell(media.twitter_power)>
+            <number-col :price="1" :change="`+23.5`"/>
+        </template>
+
+        <template #cell(media.discord_power)>
+            <number-col :price="1" :change="`-10.2`"/>
+        </template>
+
+        <!-- Partner Collections & Partners Column -->
+        <template #cell(collections)="data">
+            <partner-col
+            :partners="data.item.collections"
+            :totalPartners="data.item.total_collections"
+            :imageStyle="imageStyle"
+            :rowIndex="data.index"/>
+        </template>
+
+        <template #cell(partners)="data">
+            <partner-col
+            :partners="data.item.partners"
+            :totalPartners="data.item.total_partners"
+            :imageStyle="imageStyle"
+            :rowIndex="data.index"/>
+        </template>
+
+
     </b-table>
   </div>
 </template>
 
 <script>
-
-/**
- *         
-
-        <template #cell(source)="data">
-            <collection-col :data="data.item"/>
-        </template>
-
-        <!-- Number Column -->
-        <template #cell(total_volume)="data">
-            <number-col :data="data.item"/>
-        </template>
-
-        <template #cell(floor_price)="data">
-            <number-col :data="data.item"/>
-        </template>
-
-        <template #cell(one_day_average_price)="data">
-            <number-col :data="data.item"/>
-        </template>
-
-        <template #cell(one_day_sales)="data">
-            <number-col :data="data.item"/>
-        </template>
-
-        <template #cell(twitter_power)="data">
-            <number-col :data="data.item"/>
-        </template>
-
-        <template #cell(discord_power)="data">
-            <number-col :data="data.item"/>
-        </template>
-
-        <!-- Partner Collections & Partners Column -->
-        <template #cell(collections)="data">
-            <partner-col :data="data.item"/>
-        </template>
-
-        <template #cell(partners)="data">
-            <partner-col :data="data.item"/>
-        </template>
- */
-
 export default {
     name: 'Board',
 
@@ -113,13 +118,13 @@ export default {
         divisionCol: () => import('./divisionCol'),
         nameCol: () => import('./nameCol'),
         
-//        numberCol: () => import('./numberCol'),
-//        partnerCol: () => import('./partnerCol'),
+        rankingCol: () => import('./rankingCol'),
+        numberCol: () => import('./numberCol'),
+        partnerCol: () => import('./partnerCol'),
     },
 
     methods: {
         sort(a, b, key) {
-            console.log(key)
             return this.$sort.text(a[key], b[key])
         }
     }

@@ -1,6 +1,6 @@
-
 <template>
   <div id="event">
+    <div class="event-inner">
     <calendar @onChangeDate="onChange"/>
     <Board
     class="text-center"
@@ -9,6 +9,7 @@
     :loading="LOADING"
     :imageStyle="IMAGE_STYLE"/>
     <next-btn :loading="LOADING" :current="CURRENT" :total="TOTAL" @click="onNext"/>
+    </div>
   </div>
 </template>
 
@@ -66,5 +67,13 @@ export default {
 </script>
 
 <style>
+#event {
+  display: flex;
+  justify-content: center;
+}
 
+.event-inner {
+  max-width: 1440px;
+  width:100%;
+}
 </style>

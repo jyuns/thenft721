@@ -18,6 +18,7 @@ import { mapState } from 'vuex'
 export default {
     methods: {
         onChangeDate(e) {
+            if(e.selectedYMD == this.DATE) return
             this.$emit('onChangeDate', e.selectedDate)
         }
     },

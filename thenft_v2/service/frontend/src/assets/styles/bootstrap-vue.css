@@ -194,7 +194,7 @@
   margin-top: 0.5rem;
 }
 .b-calendar .b-calendar-grid {
-  padding: 0;
+  padding: 8px;
   margin: 0;
   overflow: hidden;
 }

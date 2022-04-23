@@ -29,3 +29,13 @@ export function ymd(string) {
     
     return `${year}-${month}-${day}`
 }
+
+/**export function percentage(string) {
+    console.log(string)
+} */
+
+export function percentageCheck(value) {
+    let string = String(value)
+    let flag = string.indexOf('+')
+    return flag>=0? 'positive':'negative'
+}

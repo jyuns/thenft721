@@ -1,20 +1,20 @@
 <template>
-    <div id="collection-col">
+    <div id="name-col">
 
     <img-skeleton-col v-if="!name.length"/>
 
-    <div v-else class="d-flex" @click="onPageCollection">
+    <div v-else class="d-flex pointer" @click="onPageCollection">
 
         <div class="me-2 d-flex align-items-center">
             <b-img
-            :src="image"
+            :src="image || defaultImage"
             v-bind="imageStyle"
             rounded="circle"/>
         </div>
-
+        
         <div class="d-flex flex-column justify-content-center w-100">
-            <p class="text-left ellipsis fs-6">{{name}}</p>
-            <p class="text-left ellipsis fs-8">{{description}}</p>
+            <p class="text-left name-col-ellipsis fs-6 name-text">{{name}}</p>
+            <p class="text-left name-col-ellipsis fs-8 description-text">{{description}}</p>
         </div>
     </div>
 
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+
+import defaultImage from '@/assets/images/default.jpg'
 
 export default {
     props: {
@@ -60,15 +62,25 @@ export default {
             let page = this.page_str
             this.$router.push(`/collection/${page}`)
         }
+    },
+
+    data() {
+        return {
+            defaultImage
+        }
     }
 }
 </script>
 
 <style>
-.ellipsis {
+.name-col-ellipsis {
     width: 272px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.description-text {
+    color: #A6A6A6;
 }
 </style>
