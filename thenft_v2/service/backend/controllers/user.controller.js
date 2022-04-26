@@ -9,7 +9,8 @@ const { hashPassword, verifyPassword } = require('../utils/argon.util');
 
 async function signup(req, res, next) {
     let data = req.body
-    
+    console.log(data)
+
     //? default role setting
     data.role = '느프터'
 
@@ -24,7 +25,8 @@ async function signup(req, res, next) {
     }
 
     let duplicated = await User.duplicate({nickname: data.nickname})
-
+    console.log(duplicated)
+    
     if(duplicated) {
         return res.status(409).json({
             type: 'nickname',
@@ -41,15 +43,17 @@ async function signup(req, res, next) {
         })
     }
 
-    if(data.password) return
+    if(!data.password) return
     const encrypted = await hashPassword(data.password);
-    
+
     if(!encrypted) {
         return res.status(409).json({
             type: 'password',
             message: '비밀번호 암호화 과정에서 오류가 발생하였습니다.'
         })
     }
+
+    data.password = encrypted
 
     let available = await Promotion.available(data.code)
 
@@ -63,7 +67,7 @@ async function signup(req, res, next) {
     })
 
     let created = await user.save()
-
+    
     if(created) {
         return res.json({
             status: true,
@@ -77,15 +81,14 @@ async function signup(req, res, next) {
     }
 }
 
-function signin(req, res, next) {
+async function signin(req, res, next) {
     let data = req.body;
-    
+
     if(!data.email) return
     let find = await User.findOne({email: data.email})
                                .lean()
                                .exec()
-
-    if(!find.length) {
+    if(!find) {
         return res.status(409).json({
             type: 'email',
             message: '등록되지 않은 이메일입니다.'
@@ -94,6 +97,7 @@ function signin(req, res, next) {
 
     if(!data.password) return
     let verified = await verifyPassword(find.password, data.password)
+
     if(!verified) {
         return res.status(409).json({
             type: 'password',
@@ -122,12 +126,51 @@ async function signout() {
 
 }
 
-async function verifyCode() {
+async function verify(req, res, next) {
+    let data = req.body;
 
+    let available = await Promotion.available(data.code)
+    
+    if(!available || (data.code.length != 10)) {
+        return res.status(409).json({
+            type: 'code',
+            message: '유효하지 않은 초대코드입니다.'
+        })
+    } else {
+        return res.json({
+            type: null,
+            message: '초대코드 확인이 완료되었습니다.',
+        })
+    }
 }
 
-async function updateCode() {
+async function update(req, res, next) {
+    let data = req.body;
 
+    data.role = '느프터';
+
+    let available = await Promotion.available(data.code)
+
+    if(!available && (data.code.length != 10)) {
+        return res.status(409).json({
+            type: 'code',
+            message: '유효하지 않은 초대코드입니다.'
+        })
+    } else {
+        data.role = '프로느프터'
+        await Promotion.used(data.code);
+        await User.findOneAndUpdate({
+            email: data.email
+        }, {
+            $set: {
+                code: data.code,
+                role: data.role
+            }
+        }).lean()
+          .exec()
+
+        return next()
+    }
 }
 
-module.exports = { signup, signin, signout, verifyCode, updateCode }
+module.exports = { signup, signin, signout, verify, update }

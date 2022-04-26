@@ -15,4 +15,7 @@ router.use('/event', eventRoute);
 const searchRoute = require('./search.route');
 router.use('/search', searchRoute);
 
+const userRoute = require('./user.route');
+router.use('/auth', userRoute);
+
 module.exports = router;

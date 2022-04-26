@@ -1,10 +1,10 @@
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const RedisClient = require('../modules/redis.module');
-const { secret } = require('../config');
+const { secretKey } = require('../config');
 
 function sign(payload) {
-    return jwt.sign(payload, secret, {
+    return jwt.sign(payload, secretKey, {
         algorithm: 'HS256',
         expiresIn: '1d',
     })
@@ -14,7 +14,7 @@ function verify(token) {
     let decoded = {}
 
     try {
-        decoded = jwt.verify(token, secret)
+        decoded = jwt.verify(token, secretKey)
         decoded.status = true
         return {...decoded}
     } catch (err) {
@@ -25,13 +25,13 @@ function verify(token) {
 }
 
 function refresh() {
-    return jwt.sign({}, secret, {
+    return jwt.sign({}, secretKey, {
         algorithm: 'HS256',
         expiresIn: '14d',
     })
 }
 
-function refreshVerify(token, email) {
+async function refreshVerify(token, email) {
     const getAsync = promisify(RedisClient.get).bind(RedisClient);
 
     try {
@@ -39,7 +39,7 @@ function refreshVerify(token, email) {
 
         if(token === data) {
             try {
-                jwt.verify(token, secret);
+                jwt.verify(token, secretKey);
                 return true
             } catch(err) {
                 console.log(err)

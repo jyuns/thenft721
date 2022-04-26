@@ -14,7 +14,6 @@ schema.statics = {
         })
             .lean()
             .exec()
-            .length
     },
 
     used(code) {

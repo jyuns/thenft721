@@ -31,7 +31,6 @@ schema.statics = {
         return this.findOne(object)
             .lean()
             .exec()
-            .length
     }
 }
 
