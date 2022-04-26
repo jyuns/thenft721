@@ -1,6 +1,7 @@
 <template>
   <div id="sign">
-    <router-view/>
+    <router-view
+    class="sign-container"/>
   </div>
 </template>
 
@@ -11,7 +12,13 @@ export default {
 </script>
 
 <style>
-#sign {
-  
+.sign-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 32px;
+  margin-bottom: 64px;
 }
+
 </style>
