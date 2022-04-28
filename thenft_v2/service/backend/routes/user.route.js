@@ -3,6 +3,9 @@ const router = express.Router();
 
 const ctrl = require('../controllers/user.controller');
 
+router.route('/')
+    .get(ctrl.auth, ctrl.refresh)
+
 router.route('/verify')
     .post(ctrl.verify)
 

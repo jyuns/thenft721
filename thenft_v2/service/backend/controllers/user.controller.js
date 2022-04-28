@@ -2,14 +2,12 @@ const User = require('../models/user.model');
 const Promotion = require('../models/promotion.model');
 
 const jwt = require('../utils/token.util');
-const RedisClient = require('../modules/redis.module');
 
-//const { authJWT } = require('../utils/auth.util');
+const RedisClient = require('../modules/redis.module');
 const { hashPassword, verifyPassword } = require('../utils/argon.util');
 
 async function signup(req, res, next) {
     let data = req.body
-    console.log(data)
 
     //? default role setting
     data.role = '느프터'
@@ -25,7 +23,6 @@ async function signup(req, res, next) {
     }
 
     let duplicated = await User.duplicate({nickname: data.nickname})
-    console.log(duplicated)
     
     if(duplicated) {
         return res.status(409).json({
@@ -108,13 +105,15 @@ async function signin(req, res, next) {
     delete find.password
     delete find.newsletter
     delete find.code
+    delete find._id
+    delete find.__v
 
     const accessToken = await jwt.sign({
         ...find
     })
 
-    const refreshToken = await jwt.refresh()
-    await RedisClient.set(find.email, refreshToken)
+    const refreshToken = await jwt.refresh({})
+    await RedisClient.set(refreshToken, find.email)
 
     return res.json({
         message: '로그인 성공하였습니다.',
@@ -137,6 +136,8 @@ async function verify(req, res, next) {
             message: '유효하지 않은 초대코드입니다.'
         })
     } else {
+        
+
         return res.json({
             type: null,
             message: '초대코드 확인이 완료되었습니다.',
@@ -173,4 +174,72 @@ async function update(req, res, next) {
     }
 }
 
-module.exports = { signup, signin, signout, verify, update }
+
+async function auth(req, res, next) {
+    if(req.headers.authorization) {
+        const accessToken = req.headers.authorization.split('Bearer ')[1];
+        const result = jwt.verify(accessToken);
+        let data = {}
+
+        if(result.status) {
+            data.email = result.email;
+            data.nickname = result.nickname;
+            data.role = result.role;
+
+            return res.json({
+                ...data
+            })
+        } else {
+            next()            
+        }
+    } else {
+        next()
+    }
+}
+
+
+async function refresh(req, res, next) {
+
+    if(req.headers.authorization && req.headers.refresh) {
+        const accessToken = req.headers.authorization.split('Bearer ')[1];
+        const refreshToken = req.headers.refresh;
+
+        let decoded = jwt.decode(accessToken)
+
+        if(decoded === null) {
+            return res.status(401).json({
+                status: false,
+                message: 'No Authorized!'
+            })
+        }
+
+        let refresh = await jwt.refreshVerify(refreshToken, decoded.email);
+
+        if(refresh === true) {
+
+            delete decoded.iat
+            delete decoded.exp
+
+            let newAccessToken = jwt.sign(decoded);
+
+            return res.json({
+                ...decoded,
+                refreshToken,
+                accessToken: newAccessToken,
+            })
+        } else {
+            return res.status(401).json({
+                status: false,
+                message: 'No Authorized!'
+            })
+        }
+    } else {
+        return res.status(401).json({
+            status: false,
+            message: 'No Token!'
+        })
+    }
+}
+
+
+module.exports = { signup, signin, signout, verify, update, auth, refresh }
