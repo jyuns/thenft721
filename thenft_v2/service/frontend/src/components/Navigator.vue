@@ -10,8 +10,10 @@
   </b-navbar-brand>
 
     <div class="user-section">
-      <a class="signin" v-if="true" href="/auth/signin">로그인</a>
-      <div class="profile" v-else>로그인</div>
+      <a class="signin" v-if="!check" href="/auth/signin">로그인</a>
+      <a class="profile" 
+      v-else href="/auth/profile"
+      :style="{backgroundImage: `url(${profile})`}"/>
     </div>
 
   <b-navbar-toggle target="nav-collapse"/>
@@ -70,8 +72,10 @@
     </b-navbar-nav>
 
     <div class="user-section-collapse">
-      <a class="signin" v-if="true" href="/auth/signin">로그인</a>
-      <div class="profile" v-else>로그인</div>
+      <a class="signin" v-if="!check" href="/auth/signin">로그인</a>
+      <a class="profile" 
+      v-else href="/auth/profile"
+      :style="{backgroundImage: `url(${profile})`}"/>
     </div>
 
   </b-collapse>
@@ -84,6 +88,8 @@
 
 import { mapState, mapMutations, mapActions } from 'vuex';
 import defaultImage from '@/assets/images/default.jpg'
+import pronfter from '@/assets/images/pronfter.png'
+import nfter from '@/assets/images/nfter.png'
 
 export default {
 
@@ -98,7 +104,28 @@ export default {
   computed: {
     ...mapState('search', [
       'ITEMS', 'IMAGE_STYLE'
-    ])
+    ]),
+
+    ...mapState('auth', [
+      'USER'
+    ]),
+
+    check() {
+      let user = this.USER
+      let check = Object.keys(user).length
+      return check
+    },
+
+    profile() {
+      let user = this.USER
+      let check = this.check
+
+      if(check) {
+        if(user.role == '프로느프터') return pronfter
+        else if(user.role == '느프터') return nfter
+        else return defaultImage
+      } else return false
+    }
   },
 
   methods: {
@@ -190,6 +217,32 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.profile {
+  background: #C4C4C4;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  margin-left: 12px;
+  position: relative;
+
+  background-repeat: no-repeat;
+  background-size: 50px;
+  background-position-x: -8px;
+
+  display: block;
+}
+
+.profile::after {
+    height: 12px;
+    width: 12px;
+    content: '';
+    border-radius: 50%;
+    background-color:#0386FF;
+    border: 2px solid #141B2D;
+    position:absolute;
+    right: 0;
 }
 
 </style>

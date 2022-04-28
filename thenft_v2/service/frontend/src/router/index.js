@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+import store from '../store'
+
 const routes = [
   {
     path: '/',
@@ -57,6 +59,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach(async (to, from, next) => {
+  let login = await store.dispatch('auth/AUTH')
+  let path = to.path
+
+  //! 추후 로직 추가 필요
+  if(login) {
+    if(path == '/auth/signin') next('/')
+    else if(path == '/auth/signup') next('/')
+    else next()
+  } else next()
+
 })
 
 export default router

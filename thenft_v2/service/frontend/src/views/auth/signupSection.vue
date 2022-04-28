@@ -1,8 +1,9 @@
 <template>
 <div id="signup">
-    <p class="signup-title">회원가입</p>
+    <p class="sign-title">회원가입</p>
     
-    <div id="signup-inner">
+    <div id="sign-inner">
+
     <b-form-group
     label="이메일"
     label-size="md"
@@ -133,7 +134,7 @@
     </b-form-group>
     </div>
 
-    <div class="signup-submit"
+    <div class="sign-submit"
     @click="onSubmit">시작하기</div>
 
 </div>
@@ -186,10 +187,19 @@ export default {
             'VERIFY', 'SIGNUP', 'SIGNIN'
         ]),
         
+        initMessage() {
+            this.emailMessage = '이메일을 다시 확인해주세요.'
+            this.nicknameMessage = '잘못된 유형의 닉네임입니다(12자리 이내, 특수문자 불가능)'
+            this.passwordMessage = '최소 6자, 최대 20자 이내로 입력해주세요.'
+            this.codeMessage = '유효한 초대코드를 입력해주세요.'
+        },
+
         onSet(e, v) {
             this.$data[v] = e
             const re = new RegExp(this[v.toUpperCase()])
             this.$data[`${v}Verified`] = re.test(e)
+            
+            this.initMessage();
         },
 
         async onVerify() {
@@ -253,53 +263,10 @@ export default {
 </script>
 
 <style>
-legend {
-    color: white;
-}
-
-label {
-    color: white;
-}
 
 .code-feedback {
     position: absolute;
     bottom: -24px;
-}
-
-.signup-title {
-    color: white;
-    font-size: 1.25rem;
-
-    margin: 16px 32px;
-    padding: 0px 8px;
-    max-width: 492px;
-    width:100%;
-}
-
-.signup-submit {
-    color: white;
-    background-color: #0386FF;
-
-    font-size: 1rem;
-
-    margin: 16px 32px;
-    padding: 12px 8px;
-    max-width: 492px;
-    width:100%;
-
-    text-align: center;
-    border-radius: 8px;
-
-    cursor: pointer;
-}
-
-#signup-inner {
-    max-width: 492px;
-    width: 100%;
-    padding: 16px;
-
-    background-color: #252525; 
-    border-radius: 8px;
 }
 
 .code-verify-btn {

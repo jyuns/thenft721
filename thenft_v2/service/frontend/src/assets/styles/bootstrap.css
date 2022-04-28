@@ -11350,3 +11350,59 @@ div {
 .nm {
   margin: 0!important;
 }
+
+
+/* sign section */
+legend {
+  color: white;
+}
+
+label {
+  color: white;
+}
+
+.sign-title {
+  color: white;
+  font-size: 1.25rem;
+
+  margin: 16px 32px;
+  padding: 0px 8px;
+  max-width: 492px;
+  width:100%;
+}
+
+.sign-sub-title {
+  color: white;
+  font-size: .75rem;
+
+  margin: 16px 32px;
+  padding: 0px 8px;
+  max-width: 492px;
+  width:100%;
+}
+
+.sign-submit {
+  color: white;
+  background-color: #0386FF;
+
+  font-size: 1rem;
+
+  margin: 16px 32px;
+  padding: 12px 8px;
+  max-width: 492px;
+  width:100%;
+
+  text-align: center;
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+#sign-inner {
+  max-width: 492px;
+  width: 100%;
+  padding: 16px;
+
+  background-color: #252525; 
+  border-radius: 8px;
+}
